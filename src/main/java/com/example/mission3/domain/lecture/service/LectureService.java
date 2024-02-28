@@ -4,6 +4,7 @@ import com.example.mission3.domain.lecture.dto.LectureRequestDto.CreateLectureRe
 import com.example.mission3.domain.lecture.dto.LectureRequestDto.EditLectureRequestDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.CreateLectureResponseDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.EditLectureResponseDto;
+import com.example.mission3.domain.lecture.dto.LectureResponseDto.GetLectureResponseDto;
 import com.example.mission3.domain.lecture.entity.Lecture;
 import com.example.mission3.domain.lecture.repository.LectureRepository;
 import com.example.mission3.domain.teacher.entity.Teacher;
@@ -38,5 +39,14 @@ public class LectureService {
 
         lecture.update(requestDto.getTitle(), requestDto.getPrice(), requestDto.getIntroduction(), requestDto.getCategory());
         return new EditLectureResponseDto(lecture);
+    }
+
+    @Transactional(readOnly = true)
+    public GetLectureResponseDto get(Long id) {
+        Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
+                new CustomApiException("찾을 수 없는 강의 번호입니다.")
+        );
+
+        return new GetLectureResponseDto(lecture);
     }
 }
