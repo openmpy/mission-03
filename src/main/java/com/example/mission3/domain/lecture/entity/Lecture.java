@@ -8,11 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
+@DynamicUpdate
 @Entity
 public class Lecture extends Timestamped {
 
@@ -36,4 +38,19 @@ public class Lecture extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
+
+    public void update(String title, Long price, String introduction, CategoryType category) {
+        if (title != null) {
+            this.title = title;
+        }
+        if (price != null) {
+            this.price = price;
+        }
+        if (introduction != null) {
+            this.introduction = introduction;
+        }
+        if (category != null) {
+            this.category = category;
+        }
+    }
 }
