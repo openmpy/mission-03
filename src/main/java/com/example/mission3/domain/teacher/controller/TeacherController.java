@@ -4,6 +4,7 @@ import com.example.mission3.domain.teacher.dto.TeacherRequestDto.CreateTeacherRe
 import com.example.mission3.domain.teacher.dto.TeacherRequestDto.EditTeacherRequestDto;
 import com.example.mission3.domain.teacher.dto.TeacherResponseDto.CreateTeacherResponseDto;
 import com.example.mission3.domain.teacher.dto.TeacherResponseDto.EditTeacherResponseDto;
+import com.example.mission3.domain.teacher.dto.TeacherResponseDto.GetTeacherResponseDto;
 import com.example.mission3.domain.teacher.service.TeacherService;
 import com.example.mission3.global.dto.ResponseDto;
 import jakarta.validation.Valid;
@@ -37,6 +38,14 @@ public class TeacherController {
         EditTeacherResponseDto responseDto = teacherService.edit(id, requestDto);
         return ResponseEntity.ok().body(
                 new ResponseDto<>(true, "선택한 강사 정보 수정 기능", responseDto)
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        GetTeacherResponseDto responseDto = teacherService.get(id);
+        return ResponseEntity.ok().body(
+                new ResponseDto<>(true, "선택한 강사 조회 기능", responseDto)
         );
     }
 }
