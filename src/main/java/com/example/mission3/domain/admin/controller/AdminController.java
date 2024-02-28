@@ -1,6 +1,6 @@
 package com.example.mission3.domain.admin.controller;
 
-import com.example.mission3.domain.admin.dto.AdminRequestDto.CreateAdminRequestDto;
+import com.example.mission3.domain.admin.dto.AdminRequestDto.SignupAdminRequestDto;
 import com.example.mission3.domain.admin.dto.AdminResponseDto.CreateAdminResponseDto;
 import com.example.mission3.domain.admin.service.AdminService;
 import com.example.mission3.global.dto.ResponseDto;
@@ -22,8 +22,8 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> create(@RequestBody @Valid CreateAdminRequestDto requestDto, BindingResult bindingResult) {
-        CreateAdminResponseDto responseDto = adminService.create(requestDto);
+    public ResponseEntity<?> signup(@RequestBody @Valid SignupAdminRequestDto requestDto, BindingResult bindingResult) {
+        CreateAdminResponseDto responseDto = adminService.signup(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseDto<>(true, "관리자 가입 기능", responseDto)
         );

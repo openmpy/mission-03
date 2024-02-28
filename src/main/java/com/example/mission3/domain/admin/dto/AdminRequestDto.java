@@ -10,7 +10,7 @@ import lombok.Getter;
 public class AdminRequestDto {
 
     @Getter
-    public static class CreateAdminRequestDto {
+    public static class SignupAdminRequestDto {
 
         @Email(message = "올바른 이메일 형식이 아닙니다.")
         private String email;
@@ -24,13 +24,20 @@ public class AdminRequestDto {
         private DepartmentType department;
         private AuthorityType authority;
 
-        public Admin toEntity() {
+        public Admin toEntity(String encryptedPassword) {
             return Admin.builder()
                     .email(this.email)
-                    .password(this.password)
+                    .password(encryptedPassword)
                     .department(this.department)
                     .authority(this.authority)
                     .build();
         }
+    }
+
+    @Getter
+    public static class SigninAdminRequestDto {
+
+        private String email;
+        private String password;
     }
 }

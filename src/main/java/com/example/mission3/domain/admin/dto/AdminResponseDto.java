@@ -18,4 +18,14 @@ public class AdminResponseDto {
             this.authority = admin.getAuthority().name();
         }
     }
+
+    @Getter
+    public static class SigninAdminResponseDto {
+
+        private final String email;
+
+        public SigninAdminResponseDto(Admin admin) {
+            this.email = admin.getEmail();
+        }
+    }
 }
