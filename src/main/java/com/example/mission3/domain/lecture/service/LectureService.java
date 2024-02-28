@@ -1,7 +1,9 @@
 package com.example.mission3.domain.lecture.service;
 
 import com.example.mission3.domain.lecture.dto.LectureRequestDto.CreateLectureRequestDto;
+import com.example.mission3.domain.lecture.dto.LectureRequestDto.EditLectureRequestDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.CreateLectureResponseDto;
+import com.example.mission3.domain.lecture.dto.LectureResponseDto.EditLectureResponseDto;
 import com.example.mission3.domain.lecture.entity.Lecture;
 import com.example.mission3.domain.lecture.repository.LectureRepository;
 import com.example.mission3.domain.teacher.entity.Teacher;
@@ -26,5 +28,15 @@ public class LectureService {
 
         Lecture lecture = lectureRepository.save(requestDto.toEntity(teacher));
         return new CreateLectureResponseDto(lecture);
+    }
+
+    @Transactional
+    public EditLectureResponseDto edit(Long id, EditLectureRequestDto requestDto) {
+        Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
+                new CustomApiException("찾을 수 없는 강의 번호입니다.")
+        );
+
+        lecture.update(requestDto.getTitle(), requestDto.getPrice(), requestDto.getIntroduction(), requestDto.getCategory());
+        return new EditLectureResponseDto(lecture);
     }
 }

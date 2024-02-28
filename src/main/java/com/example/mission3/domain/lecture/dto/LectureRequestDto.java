@@ -36,4 +36,13 @@ public class LectureRequestDto {
                     .build();
         }
     }
+
+    @Getter
+    public static class EditLectureRequestDto {
+
+        private String title;
+        private Long price;
+        private String introduction;
+        private CategoryType category;
+    }
 }

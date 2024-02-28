@@ -22,4 +22,20 @@ public class LectureResponseDto {
             this.teacherId = lecture.getTeacher().getId();
         }
     }
+
+    @Getter
+    public static class EditLectureResponseDto {
+
+        private final String title;
+        private final Long price;
+        private final String introduction;
+        private final String category;
+
+        public EditLectureResponseDto(Lecture lecture) {
+            this.title = lecture.getTitle();
+            this.price = lecture.getPrice();
+            this.introduction = lecture.getIntroduction();
+            this.category = lecture.getCategory().name();
+        }
+    }
 }
