@@ -22,4 +22,22 @@ public class TeacherResponseDto {
             this.introduction = teacher.getIntroduction();
         }
     }
+
+    @Getter
+    public static class EditTeacherResponseDto {
+
+        private final Long id;
+        private final Integer career;
+        private final String company;
+        private final String phone;
+        private final String introduction;
+
+        public EditTeacherResponseDto(Teacher teacher) {
+            this.id = teacher.getId();
+            this.career = teacher.getCareer();
+            this.company = teacher.getCompany();
+            this.phone = teacher.getPhone();
+            this.introduction = teacher.getIntroduction();
+        }
+    }
 }

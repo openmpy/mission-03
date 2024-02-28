@@ -31,4 +31,19 @@ public class Teacher {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String introduction;
+
+    public void update(Integer career, String company, String phone, String introduction) {
+        if (career != null) {
+            this.career = career;
+        }
+        if (company != null) {
+            this.company = company;
+        }
+        if (phone != null) {
+            this.phone = phone;
+        }
+        if (introduction != null) {
+            this.introduction = introduction;
+        }
+    }
 }
