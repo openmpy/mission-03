@@ -4,6 +4,7 @@ import com.example.mission3.domain.teacher.dto.TeacherRequestDto.CreateTeacherRe
 import com.example.mission3.domain.teacher.dto.TeacherRequestDto.EditTeacherRequestDto;
 import com.example.mission3.domain.teacher.dto.TeacherResponseDto.CreateTeacherResponseDto;
 import com.example.mission3.domain.teacher.dto.TeacherResponseDto.EditTeacherResponseDto;
+import com.example.mission3.domain.teacher.dto.TeacherResponseDto.GetTeacherResponseDto;
 import com.example.mission3.domain.teacher.entity.Teacher;
 import com.example.mission3.domain.teacher.repository.TeacherRepository;
 import com.example.mission3.global.handler.exception.CustomApiException;
@@ -31,5 +32,14 @@ public class TeacherService {
 
         teacher.update(requestDto.getCareer(), requestDto.getCompany(), requestDto.getPhone(), requestDto.getIntroduction());
         return new EditTeacherResponseDto(teacher);
+    }
+
+    @Transactional(readOnly = true)
+    public GetTeacherResponseDto get(Long id) {
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() ->
+                new CustomApiException("찾을 수 없는 강사 번호입니다.")
+        );
+
+        return new GetTeacherResponseDto(teacher);
     }
 }
