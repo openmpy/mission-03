@@ -4,6 +4,8 @@ import com.example.mission3.domain.lecture.entity.Lecture;
 import com.example.mission3.domain.lecture.entity.type.CategoryType;
 import lombok.Getter;
 
+import java.util.List;
+
 public class LectureResponseDto {
 
     @Getter
@@ -61,6 +63,18 @@ public class LectureResponseDto {
             this.introduction = lecture.getIntroduction();
             this.category = lecture.getCategory();
             this.teacherId = lecture.getTeacher().getId();
+        }
+    }
+
+    @Getter
+    public static class GetLectureFromTeacherResponseDto {
+
+        private final Long teacherId;
+        private final List<GetLectureResponseDto> lectures;
+
+        public GetLectureFromTeacherResponseDto(Long teacherId, List<GetLectureResponseDto> lectures) {
+            this.teacherId = teacherId;
+            this.lectures = lectures;
         }
     }
 }
