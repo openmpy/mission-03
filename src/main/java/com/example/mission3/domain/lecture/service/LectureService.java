@@ -73,4 +73,13 @@ public class LectureService {
                 .map(GetLectureResponseDto::new)
                 .toList();
     }
+
+    @Transactional
+    public void delete(Long id) {
+        Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
+                new CustomApiException("찾을 수 없는 강의 번호입니다.")
+        );
+
+        lectureRepository.delete(lecture);
+    }
 }

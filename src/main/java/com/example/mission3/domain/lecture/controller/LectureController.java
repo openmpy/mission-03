@@ -68,4 +68,12 @@ public class LectureController {
                 new ResponseDto<>(true, "카테고리별 강의 목록 조회 기능", responseDtoList)
         );
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        lectureService.delete(id);
+        return ResponseEntity.ok().body(
+                new ResponseDto<>(true, "선택한 강의 삭제 기능", null)
+        );
+    }
 }
