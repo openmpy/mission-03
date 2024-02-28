@@ -37,7 +37,7 @@ public class AdminRequestDto {
     @Getter
     public static class SigninAdminRequestDto {
 
-        private String email;
+        private String username;
         private String password;
     }
 }
