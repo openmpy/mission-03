@@ -26,7 +26,7 @@ public class Lecture extends Timestamped {
     @Column(nullable = false)
     private Long price;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String introduction;
 
     @Enumerated(EnumType.STRING)
