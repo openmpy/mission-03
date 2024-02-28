@@ -8,7 +8,6 @@ public class TeacherResponseDto {
     @Getter
     public static class CreateTeacherResponseDto {
 
-        private final Long id;
         private final String name;
         private final Integer career;
         private final String company;
@@ -16,7 +15,6 @@ public class TeacherResponseDto {
         private final String introduction;
 
         public CreateTeacherResponseDto(Teacher teacher) {
-            this.id = teacher.getId();
             this.name = teacher.getName();
             this.career = teacher.getCareer();
             this.company = teacher.getCompany();
@@ -28,14 +26,12 @@ public class TeacherResponseDto {
     @Getter
     public static class EditTeacherResponseDto {
 
-        private final Long id;
         private final Integer career;
         private final String company;
         private final String phone;
         private final String introduction;
 
         public EditTeacherResponseDto(Teacher teacher) {
-            this.id = teacher.getId();
             this.career = teacher.getCareer();
             this.company = teacher.getCompany();
             this.phone = teacher.getPhone();
@@ -52,6 +48,7 @@ public class TeacherResponseDto {
         private final String company;
         private final String phone;
         private final String introduction;
+        private final boolean isDeleted;
 
         public GetTeacherResponseDto(Teacher teacher) {
             this.id = teacher.getId();
@@ -60,6 +57,7 @@ public class TeacherResponseDto {
             this.company = teacher.getCompany();
             this.phone = teacher.getPhone();
             this.introduction = teacher.getIntroduction();
+            this.isDeleted = teacher.isDeleted();
         }
     }
 }

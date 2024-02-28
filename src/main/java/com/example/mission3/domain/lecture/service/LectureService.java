@@ -1,5 +1,6 @@
 package com.example.mission3.domain.lecture.service;
 
+import com.example.mission3.domain.admin.repository.AdminRepository;
 import com.example.mission3.domain.lecture.dto.LectureRequestDto.CreateLectureRequestDto;
 import com.example.mission3.domain.lecture.dto.LectureRequestDto.EditLectureRequestDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.CreateLectureResponseDto;
@@ -24,9 +25,13 @@ public class LectureService {
 
     private final LectureRepository lectureRepository;
     private final TeacherRepository teacherRepository;
+    private final AdminRepository adminRepository;
 
     @Transactional
-    public CreateLectureResponseDto create(CreateLectureRequestDto requestDto) {
+    public CreateLectureResponseDto create(String email, CreateLectureRequestDto requestDto) {
+        if (!adminRepository.existsByEmail(email)) {
+            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+        }
         Teacher teacher = teacherRepository.findById(requestDto.getTeacherId()).orElseThrow(() ->
                 new CustomApiException("찾을 수 없는 강사 번호입니다.")
         );
@@ -36,7 +41,10 @@ public class LectureService {
     }
 
     @Transactional
-    public EditLectureResponseDto edit(Long id, EditLectureRequestDto requestDto) {
+    public EditLectureResponseDto edit(Long id, String email, EditLectureRequestDto requestDto) {
+        if (!adminRepository.existsByEmail(email)) {
+            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+        }
         Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
                 new CustomApiException("찾을 수 없는 강의 번호입니다.")
         );
@@ -46,7 +54,10 @@ public class LectureService {
     }
 
     @Transactional(readOnly = true)
-    public GetLectureResponseDto get(Long id) {
+    public GetLectureResponseDto get(Long id, String email) {
+        if (!adminRepository.existsByEmail(email)) {
+            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+        }
         Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
                 new CustomApiException("찾을 수 없는 강의 번호입니다.")
         );
@@ -55,7 +66,10 @@ public class LectureService {
     }
 
     @Transactional(readOnly = true)
-    public GetLectureFromTeacherResponseDto getFromTeacher(Long teacherId) {
+    public GetLectureFromTeacherResponseDto getFromTeacher(Long teacherId, String email) {
+        if (!adminRepository.existsByEmail(email)) {
+            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+        }
         Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(() ->
                 new CustomApiException("찾을 수 없는 강사 번호입니다.")
         );
@@ -68,18 +82,28 @@ public class LectureService {
     }
 
     @Transactional(readOnly = true)
-    public List<GetLectureResponseDto> getFromCategory(CategoryType category) {
+    public List<GetLectureResponseDto> getFromCategory(String email, CategoryType category) {
+        if (!adminRepository.existsByEmail(email)) {
+            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+        }
+
         return lectureRepository.findAllByCategoryOrderByCreatedAtDesc(category).stream()
                 .map(GetLectureResponseDto::new)
                 .toList();
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id, String email) {
+        if (!adminRepository.existsByEmail(email)) {
+            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+        }
         Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
                 new CustomApiException("찾을 수 없는 강의 번호입니다.")
         );
+        if (lecture.isDeleted()) {
+            throw new CustomApiException("이미 삭제된 강의입니다.");
+        }
 
-        lectureRepository.delete(lecture);
+        lecture.delete(true);
     }
 }

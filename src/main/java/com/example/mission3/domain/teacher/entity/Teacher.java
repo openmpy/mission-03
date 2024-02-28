@@ -34,6 +34,8 @@ public class Teacher {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String introduction;
 
+    private boolean isDeleted;
+
     public void update(Integer career, String company, String phone, String introduction) {
         if (career != null) {
             this.career = career;
@@ -47,5 +49,9 @@ public class Teacher {
         if (introduction != null) {
             this.introduction = introduction;
         }
+    }
+
+    public void delete(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

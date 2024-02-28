@@ -1,8 +1,8 @@
 package com.example.mission3.domain.admin.controller;
 
-import com.example.mission3.domain.admin.dto.AdminRequestDto.CreateAdminRequestDto;
-import com.example.mission3.domain.admin.dto.AdminResponseDto.CreateAdminResponseDto;
-import com.example.mission3.domain.admin.service.AdminService;
+import com.example.mission3.domain.admin.dto.AdminRequestDto.SignupAdminRequestDto;
+import com.example.mission3.domain.admin.dto.AdminResponseDto.SignupAdminResponseDto;
+import com.example.mission3.domain.admin.service.AdminAuthService;
 import com.example.mission3.global.dto.ResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/admins")
 @RestController
-public class AdminController {
+public class AdminAuthController {
 
-    private final AdminService adminService;
+    private final AdminAuthService adminAuthService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> create(@RequestBody @Valid CreateAdminRequestDto requestDto, BindingResult bindingResult) {
-        CreateAdminResponseDto responseDto = adminService.create(requestDto);
+    public ResponseEntity<?> signup(@RequestBody @Valid SignupAdminRequestDto requestDto, BindingResult bindingResult) {
+        SignupAdminResponseDto responseDto = adminAuthService.signup(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseDto<>(true, "관리자 가입 기능", responseDto)
         );

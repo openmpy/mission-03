@@ -35,6 +35,8 @@ public class Lecture extends Timestamped {
     @Column(nullable = false)
     private CategoryType category;
 
+    private boolean isDeleted;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
@@ -52,5 +54,9 @@ public class Lecture extends Timestamped {
         if (category != null) {
             this.category = category;
         }
+    }
+
+    public void delete(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
