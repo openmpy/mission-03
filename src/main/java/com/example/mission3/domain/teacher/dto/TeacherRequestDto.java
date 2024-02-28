@@ -3,7 +3,6 @@ package com.example.mission3.domain.teacher.dto;
 import com.example.mission3.domain.teacher.entity.Teacher;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
 public class TeacherRequestDto {
@@ -20,7 +19,7 @@ public class TeacherRequestDto {
         @NotBlank(message = "회사를 입력해주세요.")
         private String company;
 
-        @Pattern(regexp = "\\d{3}-\\d{4}-\\d{4}", message = "올바르지 않은 전화번호입니다.")
+        @NotBlank(message = "전화번호를 입력해주세요.")
         private String phone;
 
         @NotBlank(message = "소개를 입력해주세요.")
@@ -35,5 +34,14 @@ public class TeacherRequestDto {
                     .introduction(this.introduction)
                     .build();
         }
+    }
+
+    @Getter
+    public static class EditTeacherRequestDto {
+
+        private Integer career;
+        private String company;
+        private String phone;
+        private String introduction;
     }
 }
