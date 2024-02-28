@@ -18,6 +18,9 @@ public class Teacher {
     private Long id;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private Integer career;
 
     @Column(nullable = false)
@@ -26,6 +29,6 @@ public class Teacher {
     @Column(nullable = false)
     private String phone;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String introduction;
 }
