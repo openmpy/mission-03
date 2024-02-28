@@ -1,7 +1,7 @@
 package com.example.mission3.domain.admin.service;
 
 import com.example.mission3.domain.admin.dto.AdminRequestDto.SignupAdminRequestDto;
-import com.example.mission3.domain.admin.dto.AdminResponseDto.CreateAdminResponseDto;
+import com.example.mission3.domain.admin.dto.AdminResponseDto.SignupAdminResponseDto;
 import com.example.mission3.domain.admin.entity.Admin;
 import com.example.mission3.domain.admin.repository.AdminRepository;
 import com.example.mission3.global.handler.exception.CustomApiException;
@@ -15,13 +15,13 @@ import static com.example.mission3.domain.admin.entity.type.DepartmentType.MARKE
 
 @RequiredArgsConstructor
 @Service
-public class AdminService {
+public class AdminAuthService {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public CreateAdminResponseDto signup(SignupAdminRequestDto requestDto) {
+    public SignupAdminResponseDto signup(SignupAdminRequestDto requestDto) {
         if (adminRepository.existsByEmail(requestDto.getEmail())) {
             throw new CustomApiException("이미 가입된 이메일입니다.");
         }
@@ -31,6 +31,6 @@ public class AdminService {
 
         String encoded = passwordEncoder.encode(requestDto.getPassword());
         Admin admin = adminRepository.save(requestDto.toEntity(encoded));
-        return new CreateAdminResponseDto(admin);
+        return new SignupAdminResponseDto(admin);
     }
 }

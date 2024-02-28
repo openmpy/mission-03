@@ -6,13 +6,13 @@ import lombok.Getter;
 public class AdminResponseDto {
 
     @Getter
-    public static class CreateAdminResponseDto {
+    public static class SignupAdminResponseDto {
 
         private final String email;
         private final String department;
         private final String authority;
 
-        public CreateAdminResponseDto(Admin admin) {
+        public SignupAdminResponseDto(Admin admin) {
             this.email = admin.getEmail();
             this.department = admin.getDepartment().getValue();
             this.authority = admin.getAuthority().name();

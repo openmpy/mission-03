@@ -2,8 +2,11 @@ package com.example.mission3.domain.lecture.dto;
 
 import com.example.mission3.domain.lecture.entity.Lecture;
 import com.example.mission3.domain.lecture.entity.type.CategoryType;
+import com.example.mission3.domain.teacher.dto.TeacherResponseDto.GetTeacherResponseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class LectureResponseDto {
@@ -11,34 +14,34 @@ public class LectureResponseDto {
     @Getter
     public static class CreateLectureResponseDto {
 
-        private final Long id;
         private final String title;
         private final Long price;
         private final String introduction;
         private final String category;
         private final Long teacherId;
 
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+        private final LocalDateTime createdAt;
+
         public CreateLectureResponseDto(Lecture lecture) {
-            this.id = lecture.getId();
             this.title = lecture.getTitle();
             this.price = lecture.getPrice();
             this.introduction = lecture.getIntroduction();
             this.category = lecture.getCategory().name();
             this.teacherId = lecture.getTeacher().getId();
+            this.createdAt = lecture.getCreatedAt();
         }
     }
 
     @Getter
     public static class EditLectureResponseDto {
 
-        private final Long id;
         private final String title;
         private final Long price;
         private final String introduction;
         private final String category;
 
         public EditLectureResponseDto(Lecture lecture) {
-            this.id = lecture.getId();
             this.title = lecture.getTitle();
             this.price = lecture.getPrice();
             this.introduction = lecture.getIntroduction();
@@ -54,7 +57,12 @@ public class LectureResponseDto {
         private final Long price;
         private final String introduction;
         private final CategoryType category;
-        private final Long teacherId;
+
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+        private final LocalDateTime createdAt;
+
+        private final GetTeacherResponseDto teacher;
+        private final boolean isDeleted;
 
         public GetLectureResponseDto(Lecture lecture) {
             this.id = lecture.getId();
@@ -62,7 +70,9 @@ public class LectureResponseDto {
             this.price = lecture.getPrice();
             this.introduction = lecture.getIntroduction();
             this.category = lecture.getCategory();
-            this.teacherId = lecture.getTeacher().getId();
+            this.createdAt = lecture.getCreatedAt();
+            this.teacher = new GetTeacherResponseDto(lecture.getTeacher());
+            this.isDeleted = lecture.isDeleted();
         }
     }
 

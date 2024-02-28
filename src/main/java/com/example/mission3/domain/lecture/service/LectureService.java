@@ -100,7 +100,10 @@ public class LectureService {
         Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
                 new CustomApiException("찾을 수 없는 강의 번호입니다.")
         );
+        if (lecture.isDeleted()) {
+            throw new CustomApiException("이미 삭제된 강의입니다.");
+        }
 
-        lectureRepository.delete(lecture);
+        lecture.delete(true);
     }
 }

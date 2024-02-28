@@ -63,7 +63,10 @@ public class TeacherService {
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() ->
                 new CustomApiException("찾을 수 없는 강사 번호입니다.")
         );
+        if (teacher.isDeleted()) {
+            throw new CustomApiException("이미 삭제된 강사입니다.");
+        }
 
-        teacherRepository.delete(teacher);
+        teacher.delete(true);
     }
 }
