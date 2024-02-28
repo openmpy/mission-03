@@ -7,6 +7,7 @@ import com.example.mission3.domain.lecture.dto.LectureResponseDto.EditLectureRes
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.GetLectureFromTeacherResponseDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.GetLectureResponseDto;
 import com.example.mission3.domain.lecture.entity.Lecture;
+import com.example.mission3.domain.lecture.entity.type.CategoryType;
 import com.example.mission3.domain.lecture.repository.LectureRepository;
 import com.example.mission3.domain.teacher.entity.Teacher;
 import com.example.mission3.domain.teacher.repository.TeacherRepository;
@@ -64,5 +65,12 @@ public class LectureService {
                 .toList();
 
         return new GetLectureFromTeacherResponseDto(teacherId, lectureResponseDtoList);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetLectureResponseDto> getFromCategory(CategoryType category) {
+        return lectureRepository.findAllByCategoryOrderByCreatedAtDesc(category).stream()
+                .map(GetLectureResponseDto::new)
+                .toList();
     }
 }
