@@ -4,6 +4,7 @@ import com.example.mission3.domain.lecture.dto.LectureRequestDto.CreateLectureRe
 import com.example.mission3.domain.lecture.dto.LectureRequestDto.EditLectureRequestDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.CreateLectureResponseDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.EditLectureResponseDto;
+import com.example.mission3.domain.lecture.dto.LectureResponseDto.GetLectureResponseDto;
 import com.example.mission3.domain.lecture.service.LectureService;
 import com.example.mission3.global.dto.ResponseDto;
 import jakarta.validation.Valid;
@@ -37,6 +38,14 @@ public class LectureController {
         EditLectureResponseDto responseDto = lectureService.edit(id, requestDto);
         return ResponseEntity.ok().body(
                 new ResponseDto<>(true, "선택한 강의 정보 수정 기능", responseDto)
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        GetLectureResponseDto responseDto = lectureService.get(id);
+        return ResponseEntity.ok().body(
+                new ResponseDto<>(true, "선택한 강의 조회 기능", responseDto)
         );
     }
 }
