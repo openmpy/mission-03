@@ -4,6 +4,7 @@ import com.example.mission3.domain.lecture.dto.LectureRequestDto.CreateLectureRe
 import com.example.mission3.domain.lecture.dto.LectureRequestDto.EditLectureRequestDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.CreateLectureResponseDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.EditLectureResponseDto;
+import com.example.mission3.domain.lecture.dto.LectureResponseDto.GetLectureFromTeacherResponseDto;
 import com.example.mission3.domain.lecture.dto.LectureResponseDto.GetLectureResponseDto;
 import com.example.mission3.domain.lecture.service.LectureService;
 import com.example.mission3.global.dto.ResponseDto;
@@ -46,6 +47,14 @@ public class LectureController {
         GetLectureResponseDto responseDto = lectureService.get(id);
         return ResponseEntity.ok().body(
                 new ResponseDto<>(true, "선택한 강의 조회 기능", responseDto)
+        );
+    }
+
+    @GetMapping("/teachers/{teacherId}")
+    public ResponseEntity<?> getFromTeacher(@PathVariable Long teacherId) {
+        GetLectureFromTeacherResponseDto responseDto = lectureService.getFromTeacher(teacherId);
+        return ResponseEntity.ok().body(
+                new ResponseDto<>(true, "선택한 강사가 촬영한 강의 목록 조회 기능", responseDto)
         );
     }
 }
