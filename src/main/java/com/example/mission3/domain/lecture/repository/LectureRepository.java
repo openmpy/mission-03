@@ -1,4 +1,7 @@
 package com.example.mission3.domain.lecture.repository;
 
-public interface LectureRepository {
+import com.example.mission3.domain.lecture.entity.Lecture;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LectureRepository extends JpaRepository<Lecture, Long> {
 }
