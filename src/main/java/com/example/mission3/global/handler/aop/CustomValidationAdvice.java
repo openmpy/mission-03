@@ -1,4 +1,4 @@
-package com.example.mission3.global.handler.exception.aop;
+package com.example.mission3.global.handler.aop;
 
 import com.example.mission3.global.handler.exception.CustomValidationException;
 import org.aspectj.lang.ProceedingJoinPoint;
