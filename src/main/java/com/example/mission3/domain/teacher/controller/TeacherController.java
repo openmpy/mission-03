@@ -48,4 +48,12 @@ public class TeacherController {
                 new ResponseDto<>(true, "선택한 강사 조회 기능", responseDto)
         );
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        teacherService.delete(id);
+        return ResponseEntity.ok().body(
+                new ResponseDto<>(true, "선택한 강사 삭제 기능", null)
+        );
+    }
 }
