@@ -10,6 +10,7 @@ import com.example.mission3.domain.lecture.entity.type.CategoryType;
 import com.example.mission3.domain.lecture.service.LectureService;
 import com.example.mission3.global.dto.ResponseDto;
 import com.example.mission3.global.security.UserDetailsImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ public class LectureController {
 
     private final LectureService lectureService;
 
+    @Operation(summary = "강의 등록 기능", description = "강의를 등록할 수 있는 API")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ResponseDto<CreateLectureResponseDto> create(
@@ -40,6 +42,7 @@ public class LectureController {
         return ResponseDto.success("강의 등록 기능", responseDto);
     }
 
+    @Operation(summary = "선택한 강의 정보 수정 기능", description = "선택한 강의 정보를 수정할 수 있는 API")
     @Secured(Authority.MANAGER)
     @PutMapping("/{id}")
     public ResponseDto<EditLectureResponseDto> edit(
@@ -52,6 +55,7 @@ public class LectureController {
         return ResponseDto.success("선택한 강의 정보 수정 기능", responseDto);
     }
 
+    @Operation(summary = "선택한 강의 조회 기능", description = "선택한 강의 정보를 조회할 수 있는 API")
     @GetMapping("/{id}")
     public ResponseDto<GetLectureResponseDto> get(
             @PathVariable Long id,
@@ -61,6 +65,7 @@ public class LectureController {
         return ResponseDto.success("선택한 강의 조회 기능", responseDto);
     }
 
+    @Operation(summary = "선택한 강사가 촬영한 강의 목록 조회 기능", description = "선택한 강사가 촬영한 강의 목록을 조회할 수 있는 API")
     @GetMapping("/teachers/{teacherId}")
     public ResponseDto<GetLectureFromTeacherResponseDto> getFromTeacher(
             @PathVariable Long teacherId,
@@ -70,6 +75,7 @@ public class LectureController {
         return ResponseDto.success("선택한 강사가 촬영한 강의 목록 조회 기능", responseDto);
     }
 
+    @Operation(summary = "카테고리별 강의 목록 조회 기능", description = "카테고리별 강의 목록을 조회할 수 있는 API")
     @GetMapping
     public ResponseDto<List<GetLectureResponseDto>> getFromCategory(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -79,6 +85,7 @@ public class LectureController {
         return ResponseDto.success("카테고리별 강의 목록 조회 기능", responseDtoList);
     }
 
+    @Operation(summary = "선택한 강의 삭제 기능", description = "선택한 강의를 삭제할 수 있는 API")
     @Secured(Authority.MANAGER)
     @DeleteMapping("/{id}")
     public ResponseDto<Void> delete(
