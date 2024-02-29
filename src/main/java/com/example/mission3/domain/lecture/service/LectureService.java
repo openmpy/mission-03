@@ -102,7 +102,7 @@ public class LectureService {
         Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
                 new CustomApiException(LECTURE_ID_NOT_FOUND.getMessage())
         );
-        if (lecture.getIsDeleted()) {
+        if (lecture.isDeleted()) {
             throw new CustomApiException(LECTURE_ALREADY_DELETED.getMessage());
         }
 

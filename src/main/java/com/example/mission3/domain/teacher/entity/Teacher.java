@@ -55,4 +55,8 @@ public class Teacher {
     public void delete(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    public boolean isDeleted() {
+        return this.isDeleted;
+    }
 }

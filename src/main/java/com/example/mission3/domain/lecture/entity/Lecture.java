@@ -60,4 +60,8 @@ public class Lecture extends Timestamped {
     public void delete(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    public boolean isDeleted() {
+        return this.isDeleted;
+    }
 }
