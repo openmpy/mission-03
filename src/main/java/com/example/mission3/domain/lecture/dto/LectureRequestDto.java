@@ -35,6 +35,7 @@ public class LectureRequestDto {
                     .introduction(this.introduction)
                     .category(this.category)
                     .teacher(teacher)
+                    .isDeleted(false)
                     .build();
         }
     }

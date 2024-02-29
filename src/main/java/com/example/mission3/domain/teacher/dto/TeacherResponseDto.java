@@ -48,7 +48,7 @@ public class TeacherResponseDto {
         private final String company;
         private final String phone;
         private final String introduction;
-        private final boolean isDeleted;
+        private final Boolean isDeleted;
 
         public GetTeacherResponseDto(Teacher teacher) {
             this.id = teacher.getId();
@@ -57,7 +57,7 @@ public class TeacherResponseDto {
             this.company = teacher.getCompany();
             this.phone = teacher.getPhone();
             this.introduction = teacher.getIntroduction();
-            this.isDeleted = teacher.isDeleted();
+            this.isDeleted = teacher.getIsDeleted();
         }
     }
 }

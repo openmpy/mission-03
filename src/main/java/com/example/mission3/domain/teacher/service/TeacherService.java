@@ -65,7 +65,7 @@ public class TeacherService {
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() ->
                 new CustomApiException(TEACHER_ID_NOT_FOUND.getMessage())
         );
-        if (teacher.isDeleted()) {
+        if (teacher.getIsDeleted()) {
             throw new CustomApiException(LECTURE_ALREADY_DELETED.getMessage());
         }
 

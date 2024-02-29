@@ -57,12 +57,12 @@ public class LectureResponseDto {
         private final Long price;
         private final String introduction;
         private final CategoryType category;
+        private final Boolean isDeleted;
 
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private final LocalDateTime createdAt;
 
         private final GetTeacherResponseDto teacher;
-        private final boolean isDeleted;
 
         public GetLectureResponseDto(Lecture lecture) {
             this.id = lecture.getId();
@@ -70,9 +70,9 @@ public class LectureResponseDto {
             this.price = lecture.getPrice();
             this.introduction = lecture.getIntroduction();
             this.category = lecture.getCategory();
+            this.isDeleted = lecture.getIsDeleted();
             this.createdAt = lecture.getCreatedAt();
             this.teacher = new GetTeacherResponseDto(lecture.getTeacher());
-            this.isDeleted = lecture.isDeleted();
         }
     }
 

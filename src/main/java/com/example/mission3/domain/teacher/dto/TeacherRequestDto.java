@@ -34,6 +34,7 @@ public class TeacherRequestDto {
                     .company(this.company)
                     .phone(this.phone)
                     .introduction(this.introduction)
+                    .isDeleted(false)
                     .build();
         }
     }
