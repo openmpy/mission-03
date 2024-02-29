@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.example.mission3.domain.admin.entity.type.AuthorityType.MANAGER;
 import static com.example.mission3.domain.admin.entity.type.DepartmentType.MARKETING;
+import static com.example.mission3.global.handler.exception.ErrorCode.CURRICULUM_MANAGER_PERMISSION_REQUIRED;
+import static com.example.mission3.global.handler.exception.ErrorCode.EMAIL_ALREADY_EXISTS;
 
 @RequiredArgsConstructor
 @Service
@@ -23,10 +25,10 @@ public class AdminAuthService {
     @Transactional
     public SignupAdminResponseDto signup(SignupAdminRequestDto requestDto) {
         if (adminRepository.existsByEmail(requestDto.getEmail())) {
-            throw new CustomApiException("이미 가입된 이메일입니다.");
+            throw new CustomApiException(EMAIL_ALREADY_EXISTS.getMessage());
         }
         if (requestDto.getDepartment() == MARKETING && requestDto.getAuthority() == MANAGER) {
-            throw new CustomApiException("커리큘럼, 개발 부서만 MANAGER 권한을 부여 받을 수 있습니다.");
+            throw new CustomApiException(CURRICULUM_MANAGER_PERMISSION_REQUIRED.getMessage());
         }
 
         String encoded = passwordEncoder.encode(requestDto.getPassword());
