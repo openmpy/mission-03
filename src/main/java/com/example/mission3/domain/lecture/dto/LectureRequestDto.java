@@ -5,6 +5,7 @@ import com.example.mission3.domain.lecture.entity.type.CategoryType;
 import com.example.mission3.domain.teacher.entity.Teacher;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 
 public class LectureRequestDto {
@@ -16,6 +17,7 @@ public class LectureRequestDto {
         private String title;
 
         @NotNull(message = "가격을 입력해주세요.")
+        @PositiveOrZero(message = "가격을 다시 한번 확인해주세요.")
         private Long price;
 
         @NotBlank(message = "소개를 입력해주세요.")
@@ -40,9 +42,16 @@ public class LectureRequestDto {
     @Getter
     public static class EditLectureRequestDto {
 
+        @NotBlank(message = "강의명을 입력해주세요.")
         private String title;
+
+        @NotNull(message = "가격을 입력해주세요.")
+        @PositiveOrZero(message = "가격을 다시 한번 확인해주세요.")
         private Long price;
+
+        @NotBlank(message = "소개를 입력해주세요.")
         private String introduction;
+
         private CategoryType category;
     }
 }

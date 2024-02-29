@@ -4,6 +4,7 @@ import com.example.mission3.domain.admin.entity.Admin;
 import com.example.mission3.domain.admin.entity.type.AuthorityType;
 import com.example.mission3.domain.admin.entity.type.DepartmentType;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
@@ -37,7 +38,10 @@ public class AdminRequestDto {
     @Getter
     public static class SigninAdminRequestDto {
 
+        @NotBlank(message = "이메일을 입력해주세요.")
         private String username;
+
+        @NotBlank(message = "비밀번호를 입력해주세요.")
         private String password;
     }
 }
