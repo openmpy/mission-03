@@ -37,7 +37,7 @@ public class LectureController {
             BindingResult bindingResult
     ) {
         CreateLectureResponseDto responseDto = lectureService.create(userDetails.getUsername(), requestDto);
-        return new ResponseDto<>(true, "강의 등록 기능", responseDto);
+        return ResponseDto.success("강의 등록 기능", responseDto);
     }
 
     @Secured(Authority.MANAGER)
@@ -49,7 +49,7 @@ public class LectureController {
             BindingResult bindingResult
     ) {
         EditLectureResponseDto responseDto = lectureService.edit(id, userDetails.getUsername(), requestDto);
-        return new ResponseDto<>(true, "선택한 강의 정보 수정 기능", responseDto);
+        return ResponseDto.success("선택한 강의 정보 수정 기능", responseDto);
     }
 
     @GetMapping("/{id}")
@@ -58,7 +58,7 @@ public class LectureController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         GetLectureResponseDto responseDto = lectureService.get(id, userDetails.getUsername());
-        return new ResponseDto<>(true, "선택한 강의 조회 기능", responseDto);
+        return ResponseDto.success("선택한 강의 조회 기능", responseDto);
     }
 
     @GetMapping("/teachers/{teacherId}")
@@ -67,7 +67,7 @@ public class LectureController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         GetLectureFromTeacherResponseDto responseDto = lectureService.getFromTeacher(teacherId, userDetails.getUsername());
-        return new ResponseDto<>(true, "선택한 강사가 촬영한 강의 목록 조회 기능", responseDto);
+        return ResponseDto.success("선택한 강사가 촬영한 강의 목록 조회 기능", responseDto);
     }
 
     @GetMapping
@@ -76,7 +76,7 @@ public class LectureController {
             @RequestParam CategoryType category
     ) {
         List<GetLectureResponseDto> responseDtoList = lectureService.getFromCategory(userDetails.getUsername(), category);
-        return new ResponseDto<>(true, "카테고리별 강의 목록 조회 기능", responseDtoList);
+        return ResponseDto.success("카테고리별 강의 목록 조회 기능", responseDtoList);
     }
 
     @Secured(Authority.MANAGER)
@@ -86,6 +86,6 @@ public class LectureController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         lectureService.delete(id, userDetails.getUsername());
-        return new ResponseDto<>(true, "선택한 강의 삭제 기능", null);
+        return ResponseDto.success("선택한 강의 삭제 기능", null);
     }
 }

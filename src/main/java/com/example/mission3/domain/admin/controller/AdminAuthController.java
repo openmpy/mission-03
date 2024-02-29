@@ -21,6 +21,6 @@ public class AdminAuthController {
     @PostMapping("/signup")
     public ResponseDto<SignupAdminResponseDto> signup(@RequestBody @Valid SignupAdminRequestDto requestDto, BindingResult bindingResult) {
         SignupAdminResponseDto responseDto = adminAuthService.signup(requestDto);
-        return new ResponseDto<>(true, "관리자 가입 기능", responseDto);
+        return ResponseDto.success("관리자 가입 기능", responseDto);
     }
 }

@@ -33,7 +33,7 @@ public class TeacherController {
             BindingResult bindingResult
     ) {
         CreateTeacherResponseDto responseDto = teacherService.create(userDetails.getUsername(), requestDto);
-        return new ResponseDto<>(true, "강사 등록 기능", responseDto);
+        return ResponseDto.success("강사 등록 기능", responseDto);
     }
 
     @Secured(Authority.MANAGER)
@@ -45,7 +45,7 @@ public class TeacherController {
             BindingResult bindingResult
     ) {
         EditTeacherResponseDto responseDto = teacherService.edit(id, userDetails.getUsername(), requestDto);
-        return new ResponseDto<>(true, "선택한 강사 정보 수정 기능", responseDto);
+        return ResponseDto.success("선택한 강사 정보 수정 기능", responseDto);
     }
 
     @GetMapping("/{id}")
@@ -54,7 +54,7 @@ public class TeacherController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         GetTeacherResponseDto responseDto = teacherService.get(id, userDetails.getUsername());
-        return new ResponseDto<>(true, "선택한 강사 조회 기능", responseDto);
+        return ResponseDto.success("선택한 강사 조회 기능", responseDto);
     }
 
     @Secured(Authority.MANAGER)
@@ -64,6 +64,6 @@ public class TeacherController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         teacherService.delete(id, userDetails.getUsername());
-        return new ResponseDto<>(true, "선택한 강사 삭제 기능", null);
+        return ResponseDto.success("선택한 강사 삭제 기능", null);
     }
 }
