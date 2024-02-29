@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.example.mission3.global.handler.exception.ErrorCode.*;
+
 @RequiredArgsConstructor
 @Service
 public class LectureService {
@@ -30,10 +32,10 @@ public class LectureService {
     @Transactional
     public CreateLectureResponseDto create(String email, CreateLectureRequestDto requestDto) {
         if (!adminRepository.existsByEmail(email)) {
-            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+            throw new CustomApiException(ADMIN_ACCOUNT_NOT_FOUND.getMessage());
         }
         Teacher teacher = teacherRepository.findById(requestDto.getTeacherId()).orElseThrow(() ->
-                new CustomApiException("찾을 수 없는 강사 번호입니다.")
+                new CustomApiException(TEACHER_ID_NOT_FOUND.getMessage())
         );
 
         Lecture lecture = lectureRepository.save(requestDto.toEntity(teacher));
@@ -43,10 +45,10 @@ public class LectureService {
     @Transactional
     public EditLectureResponseDto edit(Long id, String email, EditLectureRequestDto requestDto) {
         if (!adminRepository.existsByEmail(email)) {
-            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+            throw new CustomApiException(ADMIN_ACCOUNT_NOT_FOUND.getMessage());
         }
         Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
-                new CustomApiException("찾을 수 없는 강의 번호입니다.")
+                new CustomApiException(LECTURE_ID_NOT_FOUND.getMessage())
         );
 
         lecture.update(requestDto.getTitle(), requestDto.getPrice(), requestDto.getIntroduction(), requestDto.getCategory());
@@ -56,10 +58,10 @@ public class LectureService {
     @Transactional(readOnly = true)
     public GetLectureResponseDto get(Long id, String email) {
         if (!adminRepository.existsByEmail(email)) {
-            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+            throw new CustomApiException(ADMIN_ACCOUNT_NOT_FOUND.getMessage());
         }
         Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
-                new CustomApiException("찾을 수 없는 강의 번호입니다.")
+                new CustomApiException(LECTURE_ID_NOT_FOUND.getMessage())
         );
 
         return new GetLectureResponseDto(lecture);
@@ -68,10 +70,10 @@ public class LectureService {
     @Transactional(readOnly = true)
     public GetLectureFromTeacherResponseDto getFromTeacher(Long teacherId, String email) {
         if (!adminRepository.existsByEmail(email)) {
-            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+            throw new CustomApiException(ADMIN_ACCOUNT_NOT_FOUND.getMessage());
         }
         Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(() ->
-                new CustomApiException("찾을 수 없는 강사 번호입니다.")
+                new CustomApiException(TEACHER_ID_NOT_FOUND.getMessage())
         );
 
         List<GetLectureResponseDto> lectureResponseDtoList = lectureRepository.findAllByTeacherOrderByCreatedAtDesc(teacher).stream()
@@ -84,7 +86,7 @@ public class LectureService {
     @Transactional(readOnly = true)
     public List<GetLectureResponseDto> getFromCategory(String email, CategoryType category) {
         if (!adminRepository.existsByEmail(email)) {
-            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+            throw new CustomApiException(ADMIN_ACCOUNT_NOT_FOUND.getMessage());
         }
 
         return lectureRepository.findAllByCategoryOrderByCreatedAtDesc(category).stream()
@@ -95,13 +97,13 @@ public class LectureService {
     @Transactional
     public void delete(Long id, String email) {
         if (!adminRepository.existsByEmail(email)) {
-            throw new CustomApiException("찾을 수 없는 관리자 계정입니다.");
+            throw new CustomApiException(ADMIN_ACCOUNT_NOT_FOUND.getMessage());
         }
         Lecture lecture = lectureRepository.findById(id).orElseThrow(() ->
-                new CustomApiException("찾을 수 없는 강의 번호입니다.")
+                new CustomApiException(LECTURE_ID_NOT_FOUND.getMessage())
         );
         if (lecture.isDeleted()) {
-            throw new CustomApiException("이미 삭제된 강의입니다.");
+            throw new CustomApiException(LECTURE_ALREADY_DELETED.getMessage());
         }
 
         lecture.delete(true);

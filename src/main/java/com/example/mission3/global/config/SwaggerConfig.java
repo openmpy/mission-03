@@ -15,14 +15,16 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .addSecurityItem(
-                        new SecurityRequirement().
-                                addList("Bearer Authentication")
+                        new SecurityRequirement().addList("Bearer Authentication")
                 )
                 .components(
-                        new Components()
-                                .addSecuritySchemes("Bearer Authentication", createAPIKeyScheme())
+                        new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme())
                 )
-                .info(new Info().title("My REST API"));
+                .info(
+                        new Info().title("스파르타 백오피스(Admin) 서버 API 명세서")
+                                .version("v1")
+                                .description("항해99 19기 과제3 (김수환)")
+                );
     }
 
     private SecurityScheme createAPIKeyScheme() {
