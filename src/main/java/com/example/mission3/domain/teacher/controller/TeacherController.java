@@ -11,13 +11,12 @@ import com.example.mission3.global.security.UserDetailsImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.mission3.domain.admin.entity.type.AuthorityType.Authority.MANAGER;
+import static com.example.mission3.domain.admin.entity.type.AuthorityType.Authority;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/teachers")
@@ -26,52 +25,45 @@ public class TeacherController {
 
     private final TeacherService teacherService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<?> create(
+    public ResponseDto<CreateTeacherResponseDto> create(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid CreateTeacherRequestDto requestDto,
             BindingResult bindingResult
     ) {
         CreateTeacherResponseDto responseDto = teacherService.create(userDetails.getUsername(), requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                new ResponseDto<>(true, "강사 등록 기능", responseDto)
-        );
+        return new ResponseDto<>(true, "강사 등록 기능", responseDto);
     }
 
-    @Secured(MANAGER)
+    @Secured(Authority.MANAGER)
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(
+    public ResponseDto<EditTeacherResponseDto> edit(
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid EditTeacherRequestDto requestDto,
             BindingResult bindingResult
     ) {
         EditTeacherResponseDto responseDto = teacherService.edit(id, userDetails.getUsername(), requestDto);
-        return ResponseEntity.ok().body(
-                new ResponseDto<>(true, "선택한 강사 정보 수정 기능", responseDto)
-        );
+        return new ResponseDto<>(true, "선택한 강사 정보 수정 기능", responseDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(
+    public ResponseDto<GetTeacherResponseDto> get(
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         GetTeacherResponseDto responseDto = teacherService.get(id, userDetails.getUsername());
-        return ResponseEntity.ok().body(
-                new ResponseDto<>(true, "선택한 강사 조회 기능", responseDto)
-        );
+        return new ResponseDto<>(true, "선택한 강사 조회 기능", responseDto);
     }
 
-    @Secured(MANAGER)
+    @Secured(Authority.MANAGER)
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(
+    public ResponseDto<Void> delete(
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         teacherService.delete(id, userDetails.getUsername());
-        return ResponseEntity.ok().body(
-                new ResponseDto<>(true, "선택한 강사 삭제 기능", null)
-        );
+        return new ResponseDto<>(true, "선택한 강사 삭제 기능", null);
     }
 }
