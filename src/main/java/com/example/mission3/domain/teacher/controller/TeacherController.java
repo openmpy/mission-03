@@ -9,6 +9,7 @@ import com.example.mission3.domain.teacher.service.TeacherService;
 import com.example.mission3.global.dto.ResponseDto;
 import com.example.mission3.global.security.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.example.mission3.domain.admin.entity.type.AuthorityType.Authority;
 
+@Tag(name = "Teacher API", description = "강사 관련된 API 정보를 담고 있습니다.")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/teachers")
 @RestController
