@@ -8,7 +8,7 @@ class Mission3ApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println("테스트");
+        System.out.println("테스트2");
     }
 
 }
